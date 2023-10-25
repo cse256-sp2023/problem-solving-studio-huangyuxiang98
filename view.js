@@ -1,4 +1,35 @@
 // ---- Define your dialogs  and panels here ----
+$('.permbutton').append('Permissions');
+$('#sidepanel').append("Permissions");
+
+let newPanel = define_new_effective_permissions("newpanel",true,null);
+$('#sidepanel').append(newPanel);
+$('#newpanel').attr('filepath', '/C');
+
+let newUserSelectField = define_new_user_select_field("newuserselectfield","select",function(selected_user) {
+    $('#newpanel').attr('username', selected_user);
+ });
+$('#sidepanel').append(newUserSelectField);
+
+let newDialog = define_new_dialog("newdialog","New Dialog",{});
+
+$('.fa').click(function(){
+
+    // stuff that should happen on click goes here
+    console.log('clicked!');
+    newDialog.dialog('open');
+    console.log($('#newpanel').attr('filepath'));
+    console.log($('#newpanel').attr('username'));
+    console.log($( this ).attr('permission_name'));
+
+    let my_file_obj_var = path_to_file[$('#newpanel').attr('filepath')];
+    let my_user_obj_var = all_users[$('#newpanel').attr('username')];
+    //console.log(allow_user_action(my_file_obj_var,my_user_obj_var,$( this ).attr('permission_name'),true));
+    let allowResult = allow_user_action(my_file_obj_var,my_user_obj_var,$( this ).attr('permission_name'),true);
+    //console.log(get_explanation_text(allowResult));
+    newDialog.empty();
+    newDialog.append(get_explanation_text(allowResult));
+})
 
 
 
